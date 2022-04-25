@@ -2,6 +2,7 @@ package com.example.geoquiz
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var falseButton: Button
     private lateinit var nextButton: Button
     private lateinit var prevButton: Button
+    private lateinit var resultButton: Button
     private lateinit var questionTextView: TextView
 
     private val questionsBank = listOf(
@@ -26,7 +28,8 @@ class MainActivity : AppCompatActivity() {
     )
 
     private var currentIndexQuestion = 0
-
+    private var answeredQuestionCount = 0
+    private var correctAnsweredQuestionCount = 0
     private var TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,15 +42,14 @@ class MainActivity : AppCompatActivity() {
         nextButton = findViewById(R.id.next_button)
         prevButton = findViewById(R.id.prev_button)
         questionTextView = findViewById(R.id.questions_text_view)
+        resultButton = findViewById(R.id.result_button)
 
-        trueButton.setOnClickListener { view: View ->
+        trueButton.setOnClickListener {
             checkAnswer(true)
-            isAnswered()
         }
 
-        falseButton.setOnClickListener { view: View ->
+        falseButton.setOnClickListener {
             checkAnswer(false)
-            isAnswered()
         }
 
         val questionTextResId = questionsBank[currentIndexQuestion].textResId
@@ -55,22 +57,25 @@ class MainActivity : AppCompatActivity() {
 
         nextButton.setOnClickListener {
             currentIndexQuestion = (currentIndexQuestion + 1) % questionsBank.size
+            isAnswered(currentIndexQuestion)
             updateQuestion()
-            refreshButton()
         }
 
         prevButton.setOnClickListener {
             currentIndexQuestion = (currentIndexQuestion - 1) % questionsBank.size
             if (currentIndexQuestion < 0) currentIndexQuestion = 0
+            isAnswered(currentIndexQuestion)
             updateQuestion()
-            refreshButton()
+        }
+
+        resultButton.setOnClickListener {
+            showResult()
         }
 
         questionTextView.setOnClickListener {
             currentIndexQuestion = (currentIndexQuestion + 1) % questionsBank.size
             updateQuestion()
         }
-        updateQuestion()
     }
 
     override fun onStart() {
@@ -106,20 +111,36 @@ class MainActivity : AppCompatActivity() {
     private fun checkAnswer(answer: Boolean) {
         val correctAnswer = questionsBank[currentIndexQuestion].answer
 
-        val messageResID = if (answer == correctAnswer) R.string.correct_toast
-        else R.string.incorrect_toast
+        val messageResID = if (answer == correctAnswer) {
+            correctAnsweredQuestionCount++
+            R.string.correct_toast
+        } else {
+            R.string.incorrect_toast
+        }
 
         Toast.makeText(this, messageResID, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun isAnswered() {
         trueButton.isEnabled = false
         falseButton.isEnabled = false
+        questionsBank[currentIndexQuestion].answered = true
+        answeredQuestionCount++
     }
 
-    private fun refreshButton() {
-        trueButton.isEnabled = true
-        falseButton.isEnabled = true
+    private fun isAnswered(index: Int) {
+        val isQuestionAnswered = questionsBank[index].answered
+        trueButton.isEnabled = !isQuestionAnswered
+        falseButton.isEnabled = !isQuestionAnswered
+    }
+
+    private fun showResult() {
+        val result = String.format(
+            "%.2f",
+            (correctAnsweredQuestionCount / answeredQuestionCount.toDouble()) * 100
+        )
+        Toast.makeText(
+            this,
+            "$result %",
+            Toast.LENGTH_LONG
+        ).apply { setGravity(Gravity.TOP, 0, 0) }.show()
     }
 }
 

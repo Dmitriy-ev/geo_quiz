@@ -8,6 +8,7 @@
     <string name="incorrect_toast">Неверно</string>
     <string name="next_button">Вперед</string>
     <string name="prev_button">Назад</string>
+    <string name="result_button">Показать результат</string>
     <string name="question_oceans">Тихий океан больше, чем Атлантический океан?</string>
     <string name="question_mideast">Суэцкий канал
 соединяет Красное море и Индийский океан?</string>
