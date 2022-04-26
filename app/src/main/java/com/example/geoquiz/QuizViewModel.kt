@@ -25,11 +25,12 @@ class QuizViewModel : ViewModel() {
         get() = questionsBank[currentIndexQuestion].textResId
 
     fun moveToNext() {
-        currentIndexQuestion = (currentIndexQuestion + 1) % questionsBank.size
+        currentIndexQuestion = (currentIndexQuestion + 1)
+        if(currentIndexQuestion > questionsBank.size - 1) currentIndexQuestion = questionsBank.size - 1
     }
 
     fun moveToPrev() {
-        currentIndexQuestion = (currentIndexQuestion - 1) % questionsBank.size
+        currentIndexQuestion = (currentIndexQuestion - 1)
         if (currentIndexQuestion < 0) currentIndexQuestion = 0
     }
 
