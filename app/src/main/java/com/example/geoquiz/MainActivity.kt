@@ -1,16 +1,14 @@
 package com.example.geoquiz
 
+import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.Gravity
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 
 private var TAG = "MainActivity"
 private const val KEY_INDEX = "index"
@@ -27,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var prevButton: Button
     private lateinit var resultButton: Button
     private lateinit var questionTextView: TextView
+    private lateinit var cheatButton: Button
 
     private var answeredQuestionCount = 0
     private var correctAnsweredQuestionCount = 0
@@ -45,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         prevButton = findViewById(R.id.prev_button)
         questionTextView = findViewById(R.id.questions_text_view)
         resultButton = findViewById(R.id.result_button)
+        cheatButton = findViewById(R.id.cheat_button)
 
         trueButton.setOnClickListener {
             checkAnswer(true)
@@ -76,6 +76,11 @@ class MainActivity : AppCompatActivity() {
         questionTextView.setOnClickListener {
             quizViewModel.moveToNext()
             updateQuestion()
+        }
+
+        cheatButton.setOnClickListener{
+            val intent = Intent(this, CheatActivity::class.java)
+            startActivity(intent)
         }
     }
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/
-    tools"
+    xmlns:tools="http://schemas.android.com/tools"
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -25,13 +24,15 @@
             android:id="@+id/true_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/true_button" />
+            android:text="@string/true_button"
+            android:textColor="#455A64" />
 
         <Button
             android:id="@+id/false_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/false_button" />
+            android:text="@string/false_button"
+            android:textColor="#455A64" />
 
     </LinearLayout>
 
@@ -46,7 +47,8 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/arrow_left"
             android:padding="4dp"
-            android:text="@string/prev_button" />
+            android:text="@string/prev_button"
+            android:textColor="#455A64" />
 
         <Button
             android:id="@+id/next_button"
@@ -54,12 +56,23 @@
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/arrow_right"
             android:padding="4dp"
-            android:text="@string/next_button" />
+            android:text="@string/next_button"
+            android:textColor="#455A64" />
     </LinearLayout>
+
     <Button
         android:id="@+id/result_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="4dp"
-        android:text="@string/result_button" />
+        android:text="@string/result_button"
+        android:textColor="#455A64" />
+
+    <Button
+        android:id="@+id/cheat_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/cheat_button"
+        android:textColor="#455A64" />
 </LinearLayout>
