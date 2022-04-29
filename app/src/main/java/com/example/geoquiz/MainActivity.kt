@@ -1,5 +1,6 @@
 package com.example.geoquiz
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 
 private var TAG = "MainActivity"
 private const val KEY_INDEX = "index"
+private const val REQUEST_CODE_CHEAT = 0
 
 class MainActivity : AppCompatActivity() {
 
@@ -79,7 +81,7 @@ class MainActivity : AppCompatActivity() {
             updateQuestion()
         }
 
-        cheatButton.setOnClickListener{
+        cheatButton.setOnClickListener {
             val answerIsTrue = quizViewModel.currentQuestionAnswer
             val intent = CheatActivity.newIntent(this@MainActivity, answerIsTrue)
             startActivity(intent)
@@ -121,17 +123,17 @@ class MainActivity : AppCompatActivity() {
         questionTextView.setText(quizViewModel.currentQuestionText)
     }
 
-    private fun checkAnswer(answer: Boolean) {
+    private fun checkAnswer(userAnswer: Boolean) {
         val correctAnswer = quizViewModel.currentQuestionAnswer
 
-        val messageResID = if (answer == correctAnswer) {
+        val messageResId = if (userAnswer == correctAnswer) {
             correctAnsweredQuestionCount++
             R.string.correct_toast
         } else {
             R.string.incorrect_toast
         }
 
-        Toast.makeText(this, messageResID, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
         trueButton.isEnabled = false
         falseButton.isEnabled = false
         quizViewModel.rememberAnswer(true)
